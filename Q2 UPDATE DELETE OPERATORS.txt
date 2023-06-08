@@ -1,0 +1,85 @@
+CREATE TABLE Employee (
+  employee_name VARCHAR(50),
+  street VARCHAR(50),
+  city VARCHAR(50),
+  Id INT,
+  Mobile_no VARCHAR(15)
+);
+
+CREATE TABLE Works (
+  employee_name VARCHAR(50),
+  company_name VARCHAR(50),
+  salary DECIMAL(10, 2)
+);
+
+CREATE TABLE Company (
+  company_name VARCHAR(50),
+  city VARCHAR(50)
+);
+
+CREATE TABLE Manages (
+  employee_name VARCHAR(50),
+  manager_name VARCHAR(50)
+);
+-- Insert into Employee table
+INSERT INTO Employee (employee_name, street, city, Id, Mobile_no)
+VALUES
+  ('John Doe', '123 Main St', 'City1', 1, '1234567890'),
+  ('Jane Smith', '456 Elm St', 'City2', 2, '9876543210');
+
+-- Insert into Works table
+INSERT INTO Works (employee_name, company_name, salary)
+VALUES
+  ('John Doe', 'Company1', 5000),
+  ('Jane Smith', 'Company2', 6000);
+
+-- Insert into Company table
+INSERT INTO Company (company_name, city)
+VALUES
+  ('Company1', 'City1'),
+  ('Company2', 'City2');
+
+-- Insert into Manages table
+INSERT INTO Manages (employee_name, manager_name)
+VALUES
+  ('John Doe', 'Manager1'),
+  ('Jane Smith', 'Manager2');
+-- Select all employees
+SELECT * FROM Employee;
+SELECT* FROM Works;
+
+-- Select employees and their respective companies
+SELECT e.employee_name, w.company_name
+FROM Employee e
+JOIN Works w ON e.employee_name = w.employee_name;
+
+-- Select employees and their managers
+SELECT m.employee_name, m.manager_name
+FROM Manages m;
+
+-- Select employees working in City1
+SELECT e.employee_name
+FROM Employee e
+JOIN Works w ON e.employee_name = w.employee_name
+JOIN Company c ON w.company_name = c.company_name
+WHERE c.city = 'City1';
+-- Update John Doe's street address
+UPDATE Employee
+SET street = '789 New St'
+WHERE employee_name = 'John Doe';
+
+-- Update Jane Smith's salary
+UPDATE Works
+SET salary = 7000
+WHERE employee_name = 'Jane Smith';
+SELECT* FROM Works;
+
+-- Delete the employee named 'John Doe' from the Employee table
+DELETE FROM Employee
+WHERE employee_name = 'John Doe';
+
+-- Delete all employees working in 'Company2' from the Works table
+DELETE FROM Works
+WHERE company_name = 'Company2';
+
+Select* from Works;

@@ -1,0 +1,48 @@
+CREATE TABLE customers (
+  customer_id INT NOT NULL,
+  customer_name VARCHAR(255) NOT NULL,
+  customer_email VARCHAR(255) NOT NULL
+);
+
+INSERT INTO customers (customer_id, customer_name, customer_email)
+VALUES
+(1, 'John Doe', 'johndoe@example.com'),
+(2, 'Jane Doe', 'janedoe@example.com');
+
+DECLARE
+  -- Declare variables to store customer data
+  v_customer_id customers.customer_id%TYPE;
+  v_customer_name customers.customer_name%TYPE;
+  v_customer_email customers.customer_email%TYPE;
+  
+  -- Declare a cursor to iterate over the customers table
+  CURSOR customer_cursor IS
+    SELECT customer_id, customer_name, customer_email
+    FROM customers;
+
+  -- Declare a variable to store the number of rows updated
+  row_count INT := 0;
+BEGIN
+  -- Open the cursor
+  OPEN customer_cursor;
+
+  -- Iterate over the cursor and update the customer_email column
+  LOOP
+    FETCH customer_cursor INTO v_customer_id, v_customer_name, v_customer_email;
+
+    EXIT WHEN customer_cursor%NOTFOUND;
+
+    UPDATE customers
+    SET customer_email = 'updated@example.com'
+    WHERE CURRENT OF customer_cursor;
+
+    -- Increment the row_count variable
+    row_count := row_count + 1;
+  END LOOP;
+
+  -- Close the cursor
+  CLOSE customer_cursor;
+
+  -- Display the number of rows updated
+  DBMS_OUTPUT.PUT_LINE('Number of rows updated: ' || row_count);
+END;

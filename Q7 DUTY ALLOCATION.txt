@@ -1,0 +1,60 @@
+-- Create the Employee table
+CREATE TABLE Employee (
+  emp_no INT PRIMARY KEY,
+  name VARCHAR(100),
+  skill VARCHAR(100),
+  pay_rate DECIMAL(10,2)
+);
+
+-- Create the Position table
+CREATE TABLE Position (
+  posting_no INT PRIMARY KEY,
+  skill VARCHAR(100)
+);
+
+-- Create the Duty_allocation table
+CREATE TABLE Duty_allocation (
+  posting_no INT,
+  emp_no INT,
+  day DATE,
+  shift VARCHAR(1),
+  PRIMARY KEY (posting_no, emp_no, day),
+  FOREIGN KEY (posting_no) REFERENCES Position(posting_no),
+  FOREIGN KEY (emp_no) REFERENCES Employee(emp_no)
+);
+
+-- Insert sample data into the Employee table
+INSERT INTO Employee (emp_no, name, skill, pay_rate)
+VALUES
+  (123461, 'John Doe', 'Developer', 100),
+  (123462, 'XYZ', 'Designer', 90),
+  (123463, 'Alice Johnson', 'Manager', 120);
+
+-- Insert sample data into the Position table
+INSERT INTO Position (posting_no, skill)
+VALUES
+  (1, 'Developer'),
+  (2, 'Designer'),
+  (3, 'Manager');
+
+-- Insert sample data into the Duty_allocation table
+INSERT INTO Duty_allocation (posting_no, emp_no, day, shift)
+VALUES
+  (1, 123461, '1986-04-01', 'A'),
+  (1, 123461, '1986-04-02', 'B'),
+  (2, 123462, '1986-04-01', 'A'),
+  (2, 123462, '1986-04-02', 'A');
+  SELECT* FROM Employee;
+  SELECT * FROM Duty_allocation;
+  SELECT *
+FROM Duty_allocation
+WHERE emp_no = 123461
+  AND day >= '1986-04-01'
+  AND day < '1986-05-01';
+  
+  SELECT D.* FROM Duty_allocation D
+JOIN Employee E ON D.emp_no = E.emp_no
+WHERE E.name = 'XYZ';
+
+
+

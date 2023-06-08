@@ -1,0 +1,62 @@
+-- Table Creation
+CREATE TABLE Employee (
+  employee_name VARCHAR(50),
+  street VARCHAR(50),
+  city VARCHAR(50),
+  Id INT,
+  Mobile_no VARCHAR(20)
+);
+
+CREATE TABLE Works (
+  employee_name VARCHAR(50),
+  company_name VARCHAR(50),
+  salary DECIMAL(10, 2)
+);
+
+CREATE TABLE Company (
+  company_name VARCHAR(50),
+  city VARCHAR(50)
+);
+-- Table Creation
+CREATE TABLE Manages (
+  employee_name VARCHAR(50),
+  manager_name VARCHAR(50)
+);
+
+-- Data Insertion
+INSERT INTO Manages (employee_name, manager_name)
+VALUES ('John Doe', 'Jane Smith'),
+       ('Jane Smith', 'Adam Johnson'),
+       ('Adam Johnson', 'Michael Brown');
+
+
+-- Data Insertion
+INSERT INTO Employee (employee_name, street, city, Id, Mobile_no)
+VALUES ('John Doe', '123 Main St', 'New York', 1, '123-456-7890'),
+       ('Jane Smith', '456 Elm St', 'Los Angeles', 2, '987-654-3210');
+
+INSERT INTO Works (employee_name, company_name, salary)
+VALUES ('John Doe', 'Company A', 5000.00),
+       ('Jane Smith', 'Company B', 6000.00);
+
+INSERT INTO Company (company_name, city)
+VALUES ('Company A', 'New York'),
+       ('Company B', 'Los Angeles');
+
+-- Query with JOIN
+SELECT Employee.employee_name, Works.company_name, Company.city
+FROM Employee
+JOIN Works ON Employee.employee_name = Works.employee_name
+JOIN Company ON Works.company_name = Company.company_name;
+
+-- Query with Sub-Query
+SELECT employee_name
+FROM Employee
+WHERE city IN (SELECT city FROM Employee WHERE employee_name IN (SELECT manager_name FROM Manages));
+
+-- Create View
+CREATE VIEW EmployeeCompany AS
+SELECT Employee.employee_name, Works.company_name
+FROM Employee
+JOIN Works ON Employee.employee_name = Works.employee_name;
+SELECT* FROM EmployeeCompany;

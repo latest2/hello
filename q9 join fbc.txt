@@ -1,0 +1,60 @@
+CREATE TABLE Employee (
+  employee_name VARCHAR(255),
+  street VARCHAR(255),
+  city VARCHAR(255),
+  Id INT,
+  Mobile_no VARCHAR(15)
+);
+
+CREATE TABLE Works (
+  employee_name VARCHAR(255),
+  company_name VARCHAR(255),
+  salary DECIMAL(10,2)
+);
+
+CREATE TABLE Company (
+  company_name VARCHAR(255),
+  city VARCHAR(255)
+);
+
+CREATE TABLE Manages (
+  employee_name VARCHAR(255),
+  manager_name VARCHAR(255)
+);
+INSERT INTO Employee (employee_name, street, city, Id, Mobile_no)
+VALUES ('John Doe', '123 Main Street', 'New York', 1, '1234567890'),
+       ('Jane Smith', '456 Elm Street', 'Los Angeles', 2, '9876543210');
+
+INSERT INTO Works (employee_name, company_name, salary)
+VALUES ('John Doe', 'FBC', 15000),
+       ('Jane Smith', 'XYZ Corp', 8000);
+
+INSERT INTO Company (company_name, city)
+VALUES ('FBC', 'New York'),
+       ('XYZ Corp', 'Los Angeles');
+
+INSERT INTO Manages (employee_name, manager_name)
+VALUES ('John Doe', 'Manager1'),
+       ('Jane Smith', 'Manager2');
+SELECT* FROM Employee;
+SELECT* FROM Works;
+SELECT* FROM Company;
+SELECT* FROM Manages;
+SELECT Employee.employee_name
+FROM Employee
+INNER JOIN Works ON Employee.employee_name = Works.employee_name
+INNER JOIN Company ON Works.company_name = Company.company_name
+WHERE Company.company_name = 'FBC';
+
+SELECT Employee.employee_name, Employee.city
+FROM Employee
+INNER JOIN Works ON Employee.employee_name = Works.employee_name
+INNER JOIN Company ON Works.company_name = Company.company_name
+WHERE Company.company_name = 'FBC';
+
+SELECT Employee.employee_name, Employee.street, Employee.city
+FROM Employee
+INNER JOIN Works ON Employee.employee_name = Works.employee_name
+INNER JOIN Company ON Works.company_name = Company.company_name
+WHERE Company.company_name = 'FBC' AND Works.salary > 10000;
+

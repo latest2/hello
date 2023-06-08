@@ -1,0 +1,24 @@
+-- Create the employees table
+CREATE TABLE employees (
+    employee_name VARCHAR(100),
+    age INT,
+    salary DECIMAL(10, 2)
+);
+
+-- Insert sample values into the table
+INSERT INTO employees (employee_name, age, salary)
+VALUES ('John Doe', 55, 5000.00),
+       ('Jane Smith', 65, 6000.00),
+       ('Mark Johnson', 70, 7000.00),
+       ('Sarah Williams', 50, 4500.00);
+
+-- Display the initial table
+SELECT * FROM employees;
+
+-- Update salary with 10% increment for employees above 60 years of age
+UPDATE employees
+SET salary = salary * 1.1
+WHERE age > 60;
+
+-- Display the table after salary increment
+SELECT * FROM employees;
